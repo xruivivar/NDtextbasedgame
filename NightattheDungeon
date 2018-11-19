@@ -1,0 +1,96 @@
+import java.util.Random;
+import java.util.Scanner;
+public class NightattheDungeon {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		// objects in the system
+Scanner input = new Scanner(System.in);
+Random beta = new Random();
+
+// Enemy attributes/ stats
+String[] foes = {"Evileye", "Ogre", "SkeletonWarrior", "Mage" , "Zombie" , "Goblin" };
+	int foesmaxhp = 100;
+	int foesatkdamage = 15;
+	int potiondroprate = 25; // drop rate percentage
+	
+// player's stats
+int hp = 100;
+int atkdamage = 25;
+int potions = 3;
+int potionrecoveryamt = 35;
+int potioninventoryamt = 3;
+
+
+boolean running = true;
+
+System.out.println("Welcome to a night in the dungeon!");
+
+GAME:
+while (running) {
+	System.out.println("----------------------------------");
+	
+	int foehp = beta.nextInt(foesmaxhp);
+	String enemy = foes[beta.nextInt(foes.length)];
+	System.out.println("\t# " + enemy + "  has appeared yay! #\n"  );
+	while (foehp > 0) {
+		System.out.println("\tYour Hp" + hp);
+		System.out.println("\t" + foes + "s HP" + foehp);
+		System.out.println("\n/tWhat would you like to do?");
+		System.out.println("\t1. Attack");
+		System.out.println("\t2. Use Potion");
+		System.out.println("\t3. Run Away");
+		
+		String in = input.nextLine();
+		if(in.equals("1")) {
+			int damagedealt = beta.nextInt(atkdamage);
+			int damagetaken = beta.nextInt(foesatkdamage);
+			
+			foehp -= damagedealt;
+			hp -= damagetaken;
+			
+			System.out.println("\t> You strike the enemy"+ foes + "for" + damagedealt + "damage.");
+			System.out.println("\t> You receive" + damagetaken + "in retaliation");
+			
+			if (hp < 1) {
+				System.out.println("You are too weak to continue your stay at the dungeon");
+				break;
+			}
+		}
+		else if(in.equals("2")) {
+		 if (potioninventoryamt > 0) {
+			 hp += potionrecoveryamt;
+			 potioninventoryamt--;
+			 System.out.println("\t> You use a healing potion, you recover" + potionrecoveryamt + "hp"
+			 		+ "\n\t> You now have" + hp + " Health Points"
+			 		+ "\n\t> You have" + potioninventoryamt + "potions left\n");
+			 		 
+			 		 
+		 }
+		 else {
+			 System.out.println("\n\t You don't have any potions left, try defeating enemies for more potions\n");
+		 }
+		}
+		
+		else if(in.equals("3")) { 
+			System.out.println("You have fled away from the " + foes + "!!");
+			 continue GAME;
+		}
+		else {
+			System.out.println("Invalid Command Input !!!");
+		}
+	}
+	if (hp <1) {
+		System.out.println("You barely make it out of the dungeon");
+		break;
+	}
+
+	System.out.println("----------------------------------");
+	System.out.println(" # " + foes + " was defeated !! # ");
+}
+}
+	
+	}
+
+
